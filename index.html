@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinanCalc | Calculadoras Financieras y Laborales Online</title>
+    <meta name="description" content="Herramientas y calculadoras gratuitas para calcular tu sueldo neto, cuota de hipoteca, finiquito e indemnizaciones de forma rápida y precisa.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Script / Meta de Google AdSense (Sustituye ca-pub-XXXXXXXXXXXXXXXX con tu ID si es necesario) -->
+    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --bg-input: #334155;
+            --primary: #38bdf8;
+            --primary-hover: #0284c7;
+            --accent: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: 1rem 2rem;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #38bdf8, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Banner de AdSense */
+        .ad-banner {
+            max-width: 1200px;
+            margin: 1.5rem auto;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            width: 100%;
+            flex: 1;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background-color: var(--bg-card);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--primary);
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: #0f172a;
+            border-color: var(--primary);
+        }
+
+        .calculator-card {
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            display: none;
+        }
+
+        .calculator-card.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .calc-header {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        .calc-header h2 {
+            font-size: 1.5rem;
+            color: var(--text-main);
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .calc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary);
+        }
+
+        .result-box {
+            background-color: rgba(56, 189, 248, 0.05);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .result-label {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .result-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .result-value.total {
+            font-size: 1.6rem;
+            color: var(--accent);
+        }
+
+        .seo-section {
+            max-width: 800px;
+            margin: 2rem auto;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+
+        .seo-section h3 {
+            color: var(--text-main);
+            margin: 1.5rem 0 0.5rem;
+        }
+
+        footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">Finan<span>Calc</span></a>
+            <nav>
+                <a href="#calculadoras">Calculadoras</a>
+                <a href="#guia">Información</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="hero">
+        <h1>Calculadoras Financieras y Laborales</h1>
+        <p>Herramientas gratuitas, rápidas y precisas para tomar las mejores decisiones financieras y laborales.</p>
+    </div>
+
+    <!-- Espacio reservado para AdSense -->
+    <div class="ad-banner">
+        <p>Anuncio / Publicidad</p>
+    </div>
+
+    <main class="main-content" id="calculadoras">
+        
+        <!-- Tabs de Selección -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('sueldo')">💼 Sueldo Neto</button>
+            <button class="tab-btn" onclick="switchTab('hipoteca')">🏦 Hipoteca</button>
+            <button class="tab-btn" onclick="switchTab('finiquito')">📜 Finiquito / Despido</button>
+        </div>
+
+        <!-- 1. CALCULADORA DE SUELDO NETO -->
+        <div id="tab-sueldo" class="calculator-card active">
+            <div class="calc-header">
+                <h2>Calculadora de Sueldo Neto Mensual</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Calcula cuánto cobrarás cada mes a partir de tu salario bruto anual.</p>
+            </div>
+            <div class="calc-grid">
+                <div>
+                    <div class="form-group">
+                        <label for="bruto">Salario Bruto Anual (€)</label>
+                        <input type="number" id="bruto" value="24000" oninput="calcularSueldo()">
+                    </div>
+                    <div class="form-group">
+                        <label for="pagas">Número de Pagas</label>
+                        <select id="pagas" onchange="calcularSueldo()">
+                            <option value="12">12 Pagas</option>
+                            <option value="14">14 Pagas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="irpf">Estimación IRPF (%)</label>
+                        <input type="number" id="irpf" value="15" step="0.5" oninput="calcularSueldo()">
+                    </div>
+                </div>
+                <div class="result-box">
+                    <div class="result-item">
+                        <span class="result-label">Retención IRPF (Anual):</span>
+                        <span class="result-value" id="res-irpf-anual">3.600 €</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Seg. Social (6.35%):</span>
+                        <span class="result-value" id="res-ss-anual">1.524 €</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Sueldo Neto Mensual:</span>
+                        <span class="result-value total" id="res-neto-mensual">1.573 €</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. CALCULADORA DE HIPOTECA -->
+        <div id="tab-hipoteca" class="calculator-card">
+            <div class="calc-header">
+                <h2>Calculadora de Cuota de Hipoteca</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Estima la cuota mensual de tu préstamo hipotecario e intereses.</p>
+            </div>
+            <div class="calc-grid">
+                <div>
+                    <div class="form-group">
+                        <label for="prestamo">Importe del Préstamo (€)</label>
+                        <input type="number" id="prestamo" value="150000" oninput="calcularHipoteca()">
+                    </div>
+                    <div class="form-group">
+                        <label for="plazo">Plazo de Devolución (Años)</label>
+                        <input type="number" id="plazo" value="25" oninput="calcularHipoteca()">
+                    </div>
+                    <div class="form-group">
+                        <label for="interes">Tipo de Interés Anual (%)</label>
+                        <input type="number" id="interes" value="3.0" step="0.1" oninput="calcularHipoteca()">
+                    </div>
+                </div>
+                <div class="result-box">
+                    <div class="result-item">
+                        <span class="result-label">Total a Devolver:</span>
+                        <span class="result-value" id="res-total-hipoteca">213.380 €</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Total Intereses:</span>
+                        <span class="result-value" id="res-intereses-hipoteca">63.380 €</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Cuota Mensual:</span>
+                        <span class="result-value total" id="res-cuota-mensual">711 €</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. CALCULADORA DE FINIQUITO / INDEMNIZACIÓN -->
+        <div id="tab-finiquito" class="calculator-card">
+            <div class="calc-header">
+                <h2>Calculadora de Indemnización por Despido</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Calcula el finiquito o indemnización estimada según tus años trabajados.</p>
+            </div>
+            <div class="calc-grid">
+                <div>
+                    <div class="form-group">
+                        <label for="salario-mensual">Salario Mensual Bruto (€)</label>
+                        <input type="number" id="salario-mensual" value="2000" oninput="calcularFiniquito()">
+                    </div>
+                    <div class="form-group">
+                        <label for="anos-trabajados">Años Trabajados</label>
+                        <input type="number" id="anos-trabajados" value="3" step="0.5" oninput="calcularFiniquito()">
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo-despido">Tipo de Despido</label>
+                        <select id="tipo-despido" onchange="calcularFiniquito()">
+                            <option value="20">Objetivo / Procedente (20 días/año)</option>
+                            <option value="33">Improcedente (33 días/año)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="result-box">
+                    <div class="result-item">
+                        <span class="result-label">Salario Diario:</span>
+                        <span class="result-value" id="res-salario-diario">65,75 €</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Días de Indemnización:</span>
+                        <span class="result-value" id="res-dias-total">60 días</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Indemnización Estimada:</span>
+                        <span class="result-value total" id="res-indemnizacion">3.945 €</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Banner Inferior AdSense -->
+        <div class="ad-banner">
+            <p>Anuncio / Publicidad</p>
+        </div>
+
+        <!-- Sección SEO para mejorar aprobación en AdSense -->
+        <section class="seo-section" id="guia">
+            <h3>¿Cómo funcionan nuestras calculadoras financieras?</h3>
+            <p>Nuestras herramientas están diseñadas para ofrecer estimaciones claras y precisas sobre tu economía laboral y personal. A través de algoritmos actualizados, puedes conocer en cuestión de segundos el impacto real de las retenciones de IRPF en tu nómina, las cuotas mensuales de una hipoteca o los derechos de indemnización por fin de contrato.</p>
+
+            <h3>Consejos para entender tu nómina y finanzas</h3>
+            <p>El salario bruto es la cantidad total antes de retenciones. Para conocer tu salario neto real, es necesario descontar la aportación a la Seguridad Social (habitualmente un 6,35% para contingencias comunes y desempleo) y la retención del IRPF, la cual varía según tu situación personal y familiar.</p>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 FinanCalc. Todos los derechos reservados. | Diseñado para optimizar tus decisiones financieras.</p>
+    </footer>
+
+    <script>
+        // Función para cambiar de pestaña
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.calculator-card').forEach(card => card.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById('tab-' + tabName).classList.add('active');
+        }
+
+        // 1. Lógica Sueldo
+        function calcularSueldo() {
+            const bruto = parseFloat(document.getElementById('bruto').value) || 0;
+            const pagas = parseInt(document.getElementById('pagas').value);
+            const irpfPct = parseFloat(document.getElementById('irpf').value) || 0;
+
+            const irpfAnual = bruto * (irpfPct / 100);
+            const ssAnual = bruto * 0.0635; // 6.35% SS aproximado
+            const netoAnual = bruto - irpfAnual - ssAnual;
+            const netoMensual = netoAnual / pagas;
+
+            document.getElementById('res-irpf-anual').innerText = Math.round(irpfAnual).toLocaleString() + ' €';
+            document.getElementById('res-ss-anual').innerText = Math.round(ssAnual).toLocaleString() + ' €';
+            document.getElementById('res-neto-mensual').innerText = Math.round(netoMensual).toLocaleString() + ' €';
+        }
+
+        // 2. Lógica Hipoteca
+        function calcularHipoteca() {
+            const P = parseFloat(document.getElementById('prestamo').value) || 0;
+            const anos = parseFloat(document.getElementById('plazo').value) || 0;
+            const iAnual = parseFloat(document.getElementById('interes').value) || 0;
+
+            if (P <= 0 || anos <= 0) return;
+
+            const n = anos * 12;
+            const r = (iAnual / 100) / 12;
+
+            let cuota = 0;
+            if (r === 0) {
+                cuota = P / n;
+            } else {
+                cuota = P * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+            }
+
+            const totalDevolver = cuota * n;
+            const totalIntereses = totalDevolver - P;
+
+            document.getElementById('res-cuota-mensual').innerText = Math.round(cuota).toLocaleString() + ' €';
+            document.getElementById('res-total-hipoteca').innerText = Math.round(totalDevolver).toLocaleString() + ' €';
+            document.getElementById('res-intereses-hipoteca').innerText = Math.round(totalIntereses).toLocaleString() + ' €';
+        }
+
+        // 3. Lógica Finiquito
+        function calcularFiniquito() {
+            const salarioMensual = parseFloat(document.getElementById('salario-mensual').value) || 0;
+            const anos = parseFloat(document.getElementById('anos-trabajados').value) || 0;
+            const diasPorAno = parseInt(document.getElementById('tipo-despido').value);
+
+            const salarioDiario = (salarioMensual * 12) / 365;
+            const diasTotal = anos * diasPorAno;
+            const indemnizacion = salarioDiario * diasTotal;
+
+            document.getElementById('res-salario-diario').innerText = salarioDiario.toFixed(2) + ' €';
+            document.getElementById('res-dias-total').innerText = Math.round(diasTotal) + ' días';
+            document.getElementById('res-indemnizacion').innerText = Math.round(indemnizacion).toLocaleString() + ' €';
+        }
+
+        // Ejecutar cálculos iniciales
+        calcularSueldo();
+        calcularHipoteca();
+        calcularFiniquito();
+    </script>
+</body>
+</html>
