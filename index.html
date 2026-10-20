@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FinanCalc | Calculadoras Financieras y Laborales Online</title>
-    <meta name="description" content="Herramientas y calculadoras gratuitas para calcular tu sueldo neto, cuota de hipoteca, finiquito e indemnizaciones de forma rápida y precisa.">
+    <meta name="description" content="Herramientas y calculadoras gratuitas para calcular tu sueldo neto, cuota de hipoteca, finiquito, tramos de IRPF e interés compuesto de forma rápida y precisa.">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Script / Meta de Google AdSense (Sustituye ca-pub-XXXXXXXXXXXXXXXX con tu ID si es necesario) -->
+    <!-- Script de Google AdSense -->
     <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
 
     <style>
@@ -142,7 +142,7 @@
             background-color: var(--bg-card);
             color: var(--text-muted);
             border: 1px solid var(--border);
-            padding: 0.75rem 1.5rem;
+            padding: 0.75rem 1.25rem;
             border-radius: 9999px;
             font-weight: 600;
             cursor: pointer;
@@ -273,16 +273,64 @@
             color: var(--accent);
         }
 
-        .seo-section {
+        /* Sección FAQ / Preguntas Frecuentes */
+        .faq-section {
             max-width: 800px;
-            margin: 2rem auto;
-            line-height: 1.8;
-            color: var(--text-muted);
+            margin: 3rem auto;
         }
 
-        .seo-section h3 {
+        .faq-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
             color: var(--text-main);
-            margin: 1.5rem 0 0.5rem;
+        }
+
+        .faq-item {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1.25rem;
+            text-align: left;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 1.25rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 0 1.25rem 1.25rem;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+            color: var(--primary);
         }
 
         footer {
@@ -303,7 +351,7 @@
             <a href="#" class="logo">Finan<span>Calc</span></a>
             <nav>
                 <a href="#calculadoras">Calculadoras</a>
-                <a href="#guia">Información</a>
+                <a href="#faq">Preguntas Frecuentes</a>
             </nav>
         </div>
     </header>
@@ -313,18 +361,20 @@
         <p>Herramientas gratuitas, rápidas y precisas para tomar las mejores decisiones financieras y laborales.</p>
     </div>
 
-    <!-- Espacio reservado para AdSense -->
+    <!-- Espacio para AdSense -->
     <div class="ad-banner">
         <p>Anuncio / Publicidad</p>
     </div>
 
     <main class="main-content" id="calculadoras">
         
-        <!-- Tabs de Selección -->
+        <!-- Pestañas de Selección -->
         <div class="nav-tabs">
-            <button class="tab-btn active" onclick="switchTab('sueldo')">💼 Sueldo Neto</button>
-            <button class="tab-btn" onclick="switchTab('hipoteca')">🏦 Hipoteca</button>
-            <button class="tab-btn" onclick="switchTab('finiquito')">📜 Finiquito / Despido</button>
+            <button class="tab-btn active" onclick="switchTab('sueldo', event)">💼 Sueldo Neto</button>
+            <button class="tab-btn" onclick="switchTab('hipoteca', event)">🏦 Hipoteca</button>
+            <button class="tab-btn" onclick="switchTab('finiquito', event)">📜 Finiquito</button>
+            <button class="tab-btn" onclick="switchTab('irpf', event)">📊 Tramos IRPF</button>
+            <button class="tab-btn" onclick="switchTab('interes', event)">📈 Interés Compuesto</button>
         </div>
 
         <!-- 1. CALCULADORA DE SUELDO NETO -->
@@ -410,7 +460,7 @@
         <div id="tab-finiquito" class="calculator-card">
             <div class="calc-header">
                 <h2>Calculadora de Indemnización por Despido</h2>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Calcula el finiquito o indemnización estimada según tus años trabajados.</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Calcula la indemnización estimada según tus años trabajados.</p>
             </div>
             <div class="calc-grid">
                 <div>
@@ -447,18 +497,112 @@
             </div>
         </div>
 
-        <!-- Banner Inferior AdSense -->
+        <!-- 4. CALCULADORA DE TRAMOS DE IRPF (NUEVA) -->
+        <div id="tab-irpf" class="calculator-card">
+            <div class="calc-header">
+                <h2>Calculadora de Tramos de IRPF</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Conoce qué porcentaje de impuestos pagas según los tramos progresivos del IRPF.</p>
+            </div>
+            <div class="calc-grid">
+                <div>
+                    <div class="form-group">
+                        <label for="base-irpf">Base Imponible / Salario Bruto (€)</label>
+                        <input type="number" id="base-irpf" value="30000" oninput="calcularTramosIRPF()">
+                    </div>
+                </div>
+                <div class="result-box">
+                    <div class="result-item">
+                        <span class="result-label">Cuota Total IRPF Estimada:</span>
+                        <span class="result-value" id="res-cuota-irpf">5.035 €</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Tipo Medio Efectivo:</span>
+                        <span class="result-value total" id="res-tipo-medio">16.78 %</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. CALCULADORA DE INTERÉS COMPUESTO / AHORRO (NUEVA) -->
+        <div id="tab-interes" class="calculator-card">
+            <div class="calc-header">
+                <h2>Calculadora de Interés Compuesto</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Proyecta el crecimiento de tu dinero invirtiendo a largo plazo.</p>
+            </div>
+            <div class="calc-grid">
+                <div>
+                    <div class="form-group">
+                        <label for="capital-inicial">Capital Inicial (€)</label>
+                        <input type="number" id="capital-inicial" value="5000" oninput="calcularInteresCompuesto()">
+                    </div>
+                    <div class="form-group">
+                        <label for="aportacion-mensual">Aportación Mensual (€)</label>
+                        <input type="number" id="aportacion-mensual" value="200" oninput="calcularInteresCompuesto()">
+                    </div>
+                    <div class="form-group">
+                        <label for="anos-inversion">Años de Inversión</label>
+                        <input type="number" id="anos-inversion" value="10" oninput="calcularInteresCompuesto()">
+                    </div>
+                    <div class="form-group">
+                        <label for="rentabilidad-anual">Rentabilidad Anual Estimada (%)</label>
+                        <input type="number" id="rentabilidad-anual" value="7" step="0.5" oninput="calcularInteresCompuesto()">
+                    </div>
+                </div>
+                <div class="result-box">
+                    <div class="result-item">
+                        <span class="result-label">Capital Total Aportado:</span>
+                        <span class="result-value" id="res-total-aportado">29.000 €</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Intereses Generados:</span>
+                        <span class="result-value" id="res-intereses-generados">11.693 €</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Capital Final Estimado:</span>
+                        <span class="result-value total" id="res-capital-final">40.693 €</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Espacio para AdSense -->
         <div class="ad-banner">
             <p>Anuncio / Publicidad</p>
         </div>
 
-        <!-- Sección SEO para mejorar aprobación en AdSense -->
-        <section class="seo-section" id="guia">
-            <h3>¿Cómo funcionan nuestras calculadoras financieras?</h3>
-            <p>Nuestras herramientas están diseñadas para ofrecer estimaciones claras y precisas sobre tu economía laboral y personal. A través de algoritmos actualizados, puedes conocer en cuestión de segundos el impacto real de las retenciones de IRPF en tu nómina, las cuotas mensuales de una hipoteca o los derechos de indemnización por fin de contrato.</p>
+        <!-- Preguntas Frecuentes (FAQ) -->
+        <section class="faq-section" id="faq">
+            <h2>Preguntas Frecuentes</h2>
+            
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    ¿Cuál es la diferencia entre sueldo bruto y neto?
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    El sueldo bruto es la cantidad total antes de aplicar cualquier tipo de descuento. El sueldo neto es el dinero real que recibes en tu cuenta bancaria tras descontar la aportación a la Seguridad Social (desempleo, contingencias comunes) y el IRPF.
+                </div>
+            </div>
 
-            <h3>Consejos para entender tu nómina y finanzas</h3>
-            <p>El salario bruto es la cantidad total antes de retenciones. Para conocer tu salario neto real, es necesario descontar la aportación a la Seguridad Social (habitualmente un 6,35% para contingencias comunes y desempleo) y la retención del IRPF, la cual varía según tu situación personal y familiar.</p>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    ¿Cómo se calcula el finiquito en un despido?
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    El finiquito incluye los días trabajados del mes en curso no cobrados, las vacaciones devengadas no disfrutadas, la parte proporcional de las pagas extraordinarias y la indemnización por despido correspondiente (20 o 33 días por año trabajado según procedencia).
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    ¿Qué es el interés compuesto y cómo funciona?
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    El interés compuesto es el proceso mediante el cual los intereses generados por una inversión se suman al capital inicial, provocando que en los siguientes periodos los intereses se calculen sobre un saldo mayor, multiplicando el crecimiento del ahorro a largo plazo.
+                </div>
+            </div>
         </section>
 
     </main>
@@ -468,23 +612,29 @@
     </footer>
 
     <script>
-        // Función para cambiar de pestaña
-        function switchTab(tabName) {
+        // Cambiar pestañas
+        function switchTab(tabName, event) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.calculator-card').forEach(card => card.classList.remove('active'));
 
-            event.target.classList.add('active');
+            if (event) event.target.classList.add('active');
             document.getElementById('tab-' + tabName).classList.add('active');
         }
 
-        // 1. Lógica Sueldo
+        // Abrir y cerrar FAQ
+        function toggleFaq(button) {
+            const item = button.parentElement;
+            item.classList.toggle('active');
+        }
+
+        // 1. Sueldo
         function calcularSueldo() {
             const bruto = parseFloat(document.getElementById('bruto').value) || 0;
             const pagas = parseInt(document.getElementById('pagas').value);
             const irpfPct = parseFloat(document.getElementById('irpf').value) || 0;
 
             const irpfAnual = bruto * (irpfPct / 100);
-            const ssAnual = bruto * 0.0635; // 6.35% SS aproximado
+            const ssAnual = bruto * 0.0635;
             const netoAnual = bruto - irpfAnual - ssAnual;
             const netoMensual = netoAnual / pagas;
 
@@ -493,7 +643,7 @@
             document.getElementById('res-neto-mensual').innerText = Math.round(netoMensual).toLocaleString() + ' €';
         }
 
-        // 2. Lógica Hipoteca
+        // 2. Hipoteca
         function calcularHipoteca() {
             const P = parseFloat(document.getElementById('prestamo').value) || 0;
             const anos = parseFloat(document.getElementById('plazo').value) || 0;
@@ -504,13 +654,7 @@
             const n = anos * 12;
             const r = (iAnual / 100) / 12;
 
-            let cuota = 0;
-            if (r === 0) {
-                cuota = P / n;
-            } else {
-                cuota = P * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-            }
-
+            let cuota = r === 0 ? P / n : P * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
             const totalDevolver = cuota * n;
             const totalIntereses = totalDevolver - P;
 
@@ -519,7 +663,7 @@
             document.getElementById('res-intereses-hipoteca').innerText = Math.round(totalIntereses).toLocaleString() + ' €';
         }
 
-        // 3. Lógica Finiquito
+        // 3. Finiquito
         function calcularFiniquito() {
             const salarioMensual = parseFloat(document.getElementById('salario-mensual').value) || 0;
             const anos = parseFloat(document.getElementById('anos-trabajados').value) || 0;
@@ -534,10 +678,56 @@
             document.getElementById('res-indemnizacion').innerText = Math.round(indemnizacion).toLocaleString() + ' €';
         }
 
+        // 4. Tramos IRPF
+        function calcularTramosIRPF() {
+            const bruto = parseFloat(document.getElementById('base-irpf').value) || 0;
+            let cuota = 0;
+
+            // Tramos simplificados
+            if (bruto > 300000) cuota += (bruto - 300000) * 0.47, base = 300000;
+            if (bruto > 60000) cuota += (Math.min(bruto, 300000) - 60000) * 0.45;
+            if (bruto > 35200) cuota += (Math.min(bruto, 60000) - 35200) * 0.37;
+            if (bruto > 20200) cuota += (Math.min(bruto, 35200) - 20200) * 0.30;
+            if (bruto > 12450) cuota += (Math.min(bruto, 20200) - 12450) * 0.24;
+            if (bruto > 0) cuota += Math.min(bruto, 12450) * 0.19;
+
+            const tipoMedio = bruto > 0 ? (cuota / bruto) * 100 : 0;
+
+            document.getElementById('res-cuota-irpf').innerText = Math.round(cuota).toLocaleString() + ' €';
+            document.getElementById('res-tipo-medio').innerText = tipoMedio.toFixed(2) + ' %';
+        }
+
+        // 5. Interés Compuesto
+        function calcularInteresCompuesto() {
+            const P = parseFloat(document.getElementById('capital-inicial').value) || 0;
+            const PMT = parseFloat(document.getElementById('aportacion-mensual').value) || 0;
+            const t = parseFloat(document.getElementById('anos-inversion').value) || 0;
+            const r = (parseFloat(document.getElementById('rentabilidad-anual').value) || 0) / 100;
+
+            const n = 12; // Mensual
+            const meses = t * n;
+            const rMensual = r / n;
+
+            let totalAportado = P + (PMT * meses);
+            let FV = P * Math.pow(1 + rMensual, meses);
+
+            for (let i = 1; i <= meses; i++) {
+                FV += PMT * Math.pow(1 + rMensual, meses - i);
+            }
+
+            const intereses = FV - totalAportado;
+
+            document.getElementById('res-total-aportado').innerText = Math.round(totalAportado).toLocaleString() + ' €';
+            document.getElementById('res-intereses-generados').innerText = Math.round(intereses).toLocaleString() + ' €';
+            document.getElementById('res-capital-final').innerText = Math.round(FV).toLocaleString() + ' €';
+        }
+
         // Ejecutar cálculos iniciales
         calcularSueldo();
         calcularHipoteca();
         calcularFiniquito();
+        calcularTramosIRPF();
+        calcularInteresCompuesto();
     </script>
 </body>
 </html>
