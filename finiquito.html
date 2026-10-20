@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Finiquito e Indemnización | FinanCalc</title>
+    <meta name="description" content="Calcula la indemnización por despido y el finiquito estimado según tu salario y años trabajados de forma rápida y gratuita.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --bg-input: #334155;
+            --primary: #38bdf8;
+            --accent: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-main); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+        
+        header { background-color: rgba(30, 41, 59, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50; padding: 1rem 2rem; }
+        .header-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--text-main); text-decoration: none; }
+        .logo span { color: var(--primary); }
+        
+        .main-content { max-width: 800px; margin: 2rem auto; padding: 1rem; width: 100%; flex: 1; }
+        .hero { text-align: center; margin-bottom: 2rem; }
+        .hero h1 { font-size: 2.2rem; font-weight: 800; background: linear-gradient(to right, #38bdf8, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .ad-banner { margin: 1.5rem 0; padding: 1rem; background: var(--bg-card); border: 1px dashed var(--border); border-radius: 12px; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
+        
+        .calculator-card { background-color: var(--bg-card); border-radius: 16px; padding: 2rem; border: 1px solid var(--border); box-shadow: var(--shadow); }
+        .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        @media (max-width: 768px) { .calc-grid { grid-template-columns: 1fr; } }
+        
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
+        .form-group input, .form-group select { width: 100%; padding: 0.75rem 1rem; background-color: var(--bg-input); border: 1px solid var(--border); border-radius: 8px; color: var(--text-main); font-size: 1rem; outline: none; }
+        .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
+        
+        .result-box { background-color: rgba(56, 189, 248, 0.05); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: center; }
+        .result-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px dashed var(--border); }
+        .result-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .result-label { color: var(--text-muted); font-size: 0.95rem; }
+        .result-value { font-size: 1.25rem; font-weight: 700; color: var(--primary); }
+        .result-value.total { font-size: 1.6rem; color: var(--accent); }
+        
+        footer { background-color: var(--bg-card); border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 3rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Finan<span>Calc</span></a>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="hero">
+            <h1>Calculadora de Indemnización por Despido</h1>
+            <p>Calcula el importe estimado de tu indemnización y finiquito según el tipo de despido.</p>
+        </div>
+
+        <div class="ad-banner">
+            <p>Anuncio / Publicidad</p>
+        </div>
+
+        <div class="calculator-card">
+            <div class="calc-grid">
+                <div>
+                    <div class="form-group">
+                        <label for="salario-mensual">Salario Mensual Bruto (€)</label>
+                        <input type="number" id="salario-mensual" value="2000" oninput="calcularFiniquito()">
+                    </div>
+                    <div class="form-group">
+                        <label for="anos-trabajados">Años Trabajados</label>
+                        <input type="number" id="anos-trabajados" value="3" step="0.5" oninput="calcularFiniquito()">
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo-despido">Tipo de Despido</label>
+                        <select id="tipo-despido" onchange="calcularFiniquito()">
+                            <option value="20">Objetivo / Procedente (20 días/año)</option>
+                            <option value="33">Improcedente (33 días/año)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="result-box">
+                    <div class="result-item">
+                        <span class="result-label">Salario Diario:</span>
+                        <span class="result-value" id="res-salario-diario">65,75 €</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Días de Indemnización:</span>
+                        <span class="result-value" id="res-dias-total">60 días</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Indemnización Estimada:</span>
+                        <span class="result-value total" id="res-indemnizacion">3.945 €</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ad-banner">
+            <p>Anuncio / Publicidad</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 FinanCalc. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        function calcularFiniquito() {
+            const salarioMensual = parseFloat(document.getElementById('salario-mensual').value) || 0;
+            const anos = parseFloat(document.getElementById('anos-trabajados').value) || 0;
+            const diasPorAno = parseInt(document.getElementById('tipo-despido').value);
+
+            const salarioDiario = (salarioMensual * 12) / 365;
+            const diasTotal = anos * diasPorAno;
+            const indemnizacion = salarioDiario * diasTotal;
+
+            document.getElementById('res-salario-diario').innerText = salarioDiario.toFixed(2) + ' €';
+            document.getElementById('res-dias-total').innerText = Math.round(diasTotal) + ' días';
+            document.getElementById('res-indemnizacion').innerText = Math.round(indemnizacion).toLocaleString() + ' €';
+        }
+        calcularFiniquito();
+    </script>
+</body>
+</html>
