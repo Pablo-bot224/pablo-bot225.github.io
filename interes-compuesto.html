@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Interés Compuesto | FinanCalc</title>
+    <meta name="description" content="Calcula el crecimiento de tu dinero a largo plazo aplicando interés compuesto con aportaciones periódicas.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --bg-input: #334155;
+            --primary: #38bdf8;
+            --accent: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-main); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+        
+        header { background-color: rgba(30, 41, 59, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50; padding: 1rem 2rem; }
+        .header-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--text-main); text-decoration: none; }
+        .logo span { color: var(--primary); }
+        
+        .main-content { max-width: 800px; margin: 2rem auto; padding: 1rem; width: 100%; flex: 1; }
+        .hero { text-align: center; margin-bottom: 2rem; }
+        .hero h1 { font-size: 2.2rem; font-weight: 800; background: linear-gradient(to right, #38bdf8, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .ad-banner { margin: 1.5rem 0; padding: 1rem; background: var(--bg-card); border: 1px dashed var(--border); border-radius: 12px; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
+        
+        .calculator-card { background-color: var(--bg-card); border-radius: 16px; padding: 2rem; border: 1px solid var(--border); box-shadow: var(--shadow); }
+        .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        @media (max-width: 768px) { .calc-grid { grid-template-columns: 1fr; } }
+        
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
+        .form-group input, .form-group select { width: 100%; padding: 0.75rem 1rem; background-color: var(--bg-input); border: 1px solid var(--border); border-radius: 8px; color: var(--text-main); font-size: 1rem; outline: none; }
+        .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
+        
+        .result-box { background-color: rgba(56, 189, 248, 0.05); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: center; }
+        .result-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px dashed var(--border); }
+        .result-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .result-label { color: var(--text-muted); font-size: 0.95rem; }
+        .result-value { font-size: 1.25rem; font-weight: 700; color: var(--primary); }
+        .result-value.total { font-size: 1.6rem; color: var(--accent); }
+        
+        footer { background-color: var(--bg-card); border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 3rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Finan<span>Calc</span></a>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="hero">
+            <h1>Calculadora de Interés Compuesto</h1>
+            <p>Proyecta la evolución y el crecimiento futuro de tu capital según tus aportaciones e intereses.</p>
+        </div>
+
+        <div class="ad-banner">
+            <p>Anuncio / Publicidad</p>
+        </div>
+
+        <div class="calculator-card">
+            <div class="calc-grid">
+                <div>
+                    <div class="form-group">
+                        <label for="capital-inicial">Capital Inicial (€)</label>
+                        <input type="number" id="capital-inicial" value="5000" oninput="calcularInteresCompuesto()">
+                    </div>
+                    <div class="form-group">
+                        <label for="aportacion-mensual">Aportación Mensual (€)</label>
+                        <input type="number" id="aportacion-mensual" value="200" oninput="calcularInteresCompuesto()">
+                    </div>
+                    <div class="form-group">
+                        <label for="anos-inversion">Años de Inversión</label>
+                        <input type="number" id="anos-inversion" value="10" oninput="calcularInteresCompuesto()">
+                    </div>
+                    <div class="form-group">
+                        <label for="rentabilidad-anual">Rentabilidad Anual Estimada (%)</label>
+                        <input type="number" id="rentabilidad-anual" value="7" step="0.5" oninput="calcularInteresCompuesto()">
+                    </div>
+                </div>
+                <div class="result-box">
+                    <div class="result-item">
+                        <span class="result-label">Capital Total Aportado:</span>
+                        <span class="result-value" id="res-total-aportado">29.000 €</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Intereses Generados:</span>
+                        <span class="result-value" id="res-intereses-generados">11.693 €</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Capital Final Estimado:</span>
+                        <span class="result-value total" id="res-capital-final">40.693 €</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ad-banner">
+            <p>Anuncio / Publicidad</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 FinanCalc. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        function calcularInteresCompuesto() {
+            const P = parseFloat(document.getElementById('capital-inicial').value) || 0;
+            const PMT = parseFloat(document.getElementById('aportacion-mensual').value) || 0;
+            const t = parseFloat(document.getElementById('anos-inversion').value) || 0;
+            const r = (parseFloat(document.getElementById('rentabilidad-anual').value) || 0) / 100;
+
+            const n = 12;
+            const meses = t * n;
+            const rMensual = r / n;
+
+            let totalAportado = P + (PMT * meses);
+            let FV = P * Math.pow(1 + rMensual, meses);
+
+            for (let i = 1; i <= meses; i++) {
+                FV += PMT * Math.pow(1 + rMensual, meses - i);
+            }
+
+            const intereses = FV - totalAportado;
+
+            document.getElementById('res-total-aportado').innerText = Math.round(totalAportado).toLocaleString() + ' €';
+            document.getElementById('res-intereses-generados').innerText = Math.round(intereses).toLocaleString() + ' €';
+            document.getElementById('res-capital-final').innerText = Math.round(FV).toLocaleString() + ' €';
+        }
+        calcularInteresCompuesto();
+    </script>
+</body>
+</html>
