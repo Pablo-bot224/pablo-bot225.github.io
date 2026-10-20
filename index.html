@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FinanCalc | Calculadoras Financieras y Laborales Online</title>
-    <meta name="description" content="Herramientas y calculadoras gratuitas para calcular tu sueldo neto, cuota de hipoteca, finiquito, tramos de IRPF e interés compuesto de forma rápida y precisa.">
+    <title>FinanCalc | Portal de Calculadoras Financieras, Laborales e Impuestos</title>
+    <meta name="description" content="Calculadoras financieras y laborales gratuitas en tiempo real: calcula tu sueldo neto, cuota de hipoteca, indemnización por despido, tramos de IRPF e interés compuesto. Guías informativas y análisis de impuestos.">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Script de Google AdSense -->
+    <!-- Descomenta y sustituye tu ca-pub-XXXXXXXXXXXXXXXX cuando Google valide tu cuenta -->
     <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
 
     <style>
@@ -25,7 +26,7 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border: #334155;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
         }
 
         * {
@@ -38,14 +39,15 @@
         body {
             background-color: var(--bg-main);
             color: var(--text-main);
-            line-height: 1.6;
+            line-height: 1.7;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
+        /* NAVEGACIÓN Y CABECERA */
         header {
-            background-color: rgba(30, 41, 59, 0.8);
+            background-color: rgba(30, 41, 59, 0.9);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
             position: sticky;
@@ -63,8 +65,8 @@
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 1.6rem;
+            font-weight: 800;
             color: var(--text-main);
             text-decoration: none;
             display: flex;
@@ -76,44 +78,52 @@
             color: var(--primary);
         }
 
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
         nav a {
             color: var(--text-muted);
             text-decoration: none;
-            margin-left: 1.5rem;
             font-weight: 500;
-            transition: color 0.2s;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
         }
 
         nav a:hover {
             color: var(--primary);
         }
 
+        /* HERO SECTION */
         .hero {
             text-align: center;
-            padding: 3rem 1rem 2rem;
-            max-width: 800px;
+            padding: 3.5rem 1rem 2rem;
+            max-width: 900px;
             margin: 0 auto;
         }
 
         .hero h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 800;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             background: linear-gradient(to right, #38bdf8, #10b981);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            line-height: 1.2;
         }
 
         .hero p {
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: 1.15rem;
+            line-height: 1.8;
         }
 
-        /* Banner de AdSense */
+        /* BLOQUES DE ANUNCIOS ADSENSE */
         .ad-banner {
             max-width: 1200px;
             margin: 1.5rem auto;
-            padding: 1rem;
+            padding: 1.2rem;
             background: var(--bg-card);
             border: 1px dashed var(--border);
             border-radius: 12px;
@@ -122,14 +132,16 @@
             font-size: 0.85rem;
         }
 
+        /* CONTENIDO PRINCIPAL */
         .main-content {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 1rem;
             width: 100%;
             flex: 1;
         }
 
+        /* PESTAÑAS DE NAVEGACIÓN ENTRE CALCULADORAS */
         .nav-tabs {
             display: flex;
             justify-content: center;
@@ -147,6 +159,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 0.95rem;
         }
 
         .tab-btn:hover {
@@ -158,15 +171,17 @@
             background-color: var(--primary);
             color: #0f172a;
             border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
         }
 
+        /* TARJETAS DE CALCULADORAS */
         .calculator-card {
             background-color: var(--bg-card);
             border-radius: 16px;
-            padding: 2rem;
+            padding: 2.2rem;
             border: 1px solid var(--border);
             box-shadow: var(--shadow);
-            max-width: 800px;
+            max-width: 850px;
             margin: 0 auto 3rem;
             display: none;
         }
@@ -182,25 +197,29 @@
         }
 
         .calc-header {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
             border-bottom: 1px solid var(--border);
             padding-bottom: 1rem;
         }
 
         .calc-header h2 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: var(--text-main);
+            font-weight: 700;
         }
 
         .calc-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
         @media (max-width: 768px) {
             .calc-grid {
                 grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 2.1rem;
             }
         }
 
@@ -225,13 +244,14 @@
             color: var(--text-main);
             font-size: 1rem;
             outline: none;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s ease;
         }
 
         .form-group input:focus, .form-group select:focus {
             border-color: var(--primary);
         }
 
+        /* CAJA DE RESULTADOS */
         .result-box {
             background-color: rgba(56, 189, 248, 0.05);
             border: 1px solid rgba(56, 189, 248, 0.2);
@@ -247,7 +267,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
+            padding-bottom: 0.6rem;
             border-bottom: 1px dashed var(--border);
         }
 
@@ -273,17 +293,91 @@
             color: var(--accent);
         }
 
-        /* Sección FAQ / Preguntas Frecuentes */
+        /* SECCIÓN EXTENSA DE GUÍAS E INFORMACIÓN SEO */
+        .info-section {
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            margin: 3rem 0;
+        }
+
+        .info-section h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .info-section h3 {
+            font-size: 1.4rem;
+            color: var(--accent);
+            margin: 2rem 0 0.8rem;
+            font-weight: 700;
+        }
+
+        .info-section p {
+            color: var(--text-muted);
+            margin-bottom: 1.2rem;
+            font-size: 1.02rem;
+            line-height: 1.8;
+        }
+
+        .info-section ul {
+            color: var(--text-muted);
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-section li {
+            margin-bottom: 0.6rem;
+        }
+
+        /* TABLAS COMPARATIVAS DE IMPUESTOS */
+        .table-container {
+            overflow-x: auto;
+            margin: 1.8rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-main);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 1rem 1.2rem;
+            border: 1px solid var(--border);
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: var(--bg-input);
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        td {
+            color: var(--text-muted);
+        }
+
+        /* SECCIÓN FAQ (PREGUNTAS FRECUENTES ACCORDEÓN) */
         .faq-section {
-            max-width: 800px;
-            margin: 3rem auto;
+            max-width: 1000px;
+            margin: 3.5rem auto;
         }
 
         .faq-section h2 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            margin-bottom: 1.8rem;
             text-align: center;
             color: var(--text-main);
+            font-weight: 800;
         }
 
         .faq-item {
@@ -315,12 +409,12 @@
             transition: max-height 0.3s ease, padding 0.3s ease;
             padding: 0 1.25rem;
             color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.7;
+            font-size: 0.98rem;
+            line-height: 1.8;
         }
 
         .faq-item.active .faq-answer {
-            max-height: 300px;
+            max-height: 500px;
             padding: 0 1.25rem 1.25rem;
         }
 
@@ -333,42 +427,58 @@
             color: var(--primary);
         }
 
+        /* PIE DE PÁGINA CON ENLACES LEGALES */
         footer {
             background-color: var(--bg-card);
             border-top: 1px solid var(--border);
-            padding: 2rem;
+            padding: 2.5rem 2rem;
             text-align: center;
             color: var(--text-muted);
             font-size: 0.9rem;
-            margin-top: 3rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+            margin: 0 0.6rem;
+            transition: color 0.2s ease;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
+    <!-- CABECERA -->
     <header>
         <div class="header-container">
-            <a href="#" class="logo">Finan<span>Calc</span></a>
+            <a href="index.html" class="logo">Finan<span>Calc</span></a>
             <nav>
-                <a href="#calculadoras">Calculadoras</a>
+                <a href="#calculadoras">Herramientas</a>
+                <a href="#guias">Guía Financiera</a>
                 <a href="#faq">Preguntas Frecuentes</a>
             </nav>
         </div>
     </header>
 
+    <!-- PRESENTACIÓN -->
     <div class="hero">
-        <h1>Calculadoras Financieras y Laborales</h1>
-        <p>Herramientas gratuitas, rápidas y precisas para tomar las mejores decisiones financieras y laborales.</p>
+        <h1>Portal de Calculadoras Financieras y Laborales</h1>
+        <p>Herramientas de precisión gratuitas para calcular tu sueldo neto, estimar cuotas de hipoteca, analizar indemnizaciones laborales, conocer los tramos de IRPF y simular la evolución de tus ahorros con interés compuesto.</p>
     </div>
 
-    <!-- Espacio para AdSense -->
+    <!-- BANNER ADSENSE SUPERIOR -->
     <div class="ad-banner">
-        <p>Anuncio / Publicidad</p>
+        <p>Espacio Publicitario / AdSense Header Banner</p>
     </div>
 
+    <!-- CONTENIDO PRINCIPAL Y CALCULADORAS -->
     <main class="main-content" id="calculadoras">
         
-        <!-- Pestañas de Selección -->
+        <!-- PESTAÑAS DE SELECCIÓN -->
         <div class="nav-tabs">
             <button class="tab-btn active" onclick="switchTab('sueldo', event)">💼 Sueldo Neto</button>
             <button class="tab-btn" onclick="switchTab('hipoteca', event)">🏦 Hipoteca</button>
@@ -381,7 +491,7 @@
         <div id="tab-sueldo" class="calculator-card active">
             <div class="calc-header">
                 <h2>Calculadora de Sueldo Neto Mensual</h2>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Calcula cuánto cobrarás cada mes a partir de tu salario bruto anual.</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Calcula cuánto cobrarás en tu cuenta bancaria a partir del salario bruto anual.</p>
             </div>
             <div class="calc-grid">
                 <div>
@@ -422,7 +532,7 @@
         <div id="tab-hipoteca" class="calculator-card">
             <div class="calc-header">
                 <h2>Calculadora de Cuota de Hipoteca</h2>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Estima la cuota mensual de tu préstamo hipotecario e intereses.</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Simula la cuota mensual de tu préstamo con el método francés.</p>
             </div>
             <div class="calc-grid">
                 <div>
@@ -460,7 +570,7 @@
         <div id="tab-finiquito" class="calculator-card">
             <div class="calc-header">
                 <h2>Calculadora de Indemnización por Despido</h2>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Calcula la indemnización estimada según tus años trabajados.</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Estima tu indemnización laboral según la modalidad de despido.</p>
             </div>
             <div class="calc-grid">
                 <div>
@@ -497,11 +607,11 @@
             </div>
         </div>
 
-        <!-- 4. CALCULADORA DE TRAMOS DE IRPF (NUEVA) -->
+        <!-- 4. CALCULADORA DE TRAMOS DE IRPF -->
         <div id="tab-irpf" class="calculator-card">
             <div class="calc-header">
                 <h2>Calculadora de Tramos de IRPF</h2>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Conoce qué porcentaje de impuestos pagas según los tramos progresivos del IRPF.</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Conoce la distribución progresiva de impuestos estatales y autonómicos.</p>
             </div>
             <div class="calc-grid">
                 <div>
@@ -523,11 +633,11 @@
             </div>
         </div>
 
-        <!-- 5. CALCULADORA DE INTERÉS COMPUESTO / AHORRO (NUEVA) -->
+        <!-- 5. CALCULADORA DE INTERÉS COMPUESTO -->
         <div id="tab-interes" class="calculator-card">
             <div class="calc-header">
                 <h2>Calculadora de Interés Compuesto</h2>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Proyecta el crecimiento de tu dinero invirtiendo a largo plazo.</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Calcula la multiplicación de tu capital mediante la capitalización de intereses.</p>
             </div>
             <div class="calc-grid">
                 <div>
@@ -565,54 +675,141 @@
             </div>
         </div>
 
-        <!-- Espacio para AdSense -->
+        <!-- BANNER ADSENSE INTERMEDIO -->
         <div class="ad-banner">
-            <p>Anuncio / Publicidad</p>
+            <p>Espacio Publicitario / AdSense In-Article</p>
         </div>
 
-        <!-- Preguntas Frecuentes (FAQ) -->
+        <!-- GUÍA DETALLADA Y CONTENIDO SEO EXTENSO -->
+        <section class="info-section" id="guias">
+            <h2>Guía Completa de Finanzas Personales e Impuestos</h2>
+            <p>Tomar decisiones financieras informadas requiere comprender cómo interactúan los salarios, los impuestos sobre la renta, los compromisos bancarios a largo plazo y la acumulación de capital con el paso del tiempo. A continuación, desglosamos en detalle cada uno de estos conceptos fundamentales.</p>
+
+            <h3>1. ¿Cómo se calcula la nómina? Diferencia entre Bruto y Neto</h3>
+            <p>La diferencia sustancial entre el salario bruto pactado con una empresa y el dinero real que ingresa en la cuenta del trabajador (salario neto) radica en dos retenciones obligatorias:</p>
+            <ul>
+                <li><strong>Aportaciones a la Seguridad Social:</strong> Generalmente suponen un 6,35% sobre la base de cotización (desglosado en contingencias comunes, desempleo y formación profesional).</li>
+                <li><strong>Retención a cuenta del IRPF:</strong> Es un pago anticipado a Hacienda calculado según la situación familiar, el tipo de contrato y la cuantía anual del sueldo.</li>
+            </ul>
+
+            <h3>2. Los Tramos Progresivos del IRPF</h3>
+            <p>El Impuesto sobre la Renta de las Personas Físicas (IRPF) funciona mediante escalas progresivas marginales. Esto significa que no se paga el mismo porcentaje por la totalidad del sueldo, sino por tramos incrementales:</p>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tramo de Base Imponible</th>
+                            <th>Tipo Aplicable (%)</th>
+                            <th>Concepto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Hasta 12.450 €</td>
+                            <td>19 %</td>
+                            <td>Primer tramo básico</td>
+                        </tr>
+                        <tr>
+                            <td>De 12.450 € a 20.200 €</td>
+                            <td>24 %</td>
+                            <td>Segundo tramo medio-bajo</td>
+                        </tr>
+                        <tr>
+                            <td>De 20.200 € a 35.200 €</td>
+                            <td>30 %</td>
+                            <td>Tercer tramo medio</td>
+                        </tr>
+                        <tr>
+                            <td>De 35.200 € a 60.000 €</td>
+                            <td>37 %</td>
+                            <td>Cuarto tramo medio-alto</td>
+                        </tr>
+                        <tr>
+                            <td>De 60.000 € a 300.000 €</td>
+                            <td>45 %</td>
+                            <td>Quinto tramo elevado</td>
+                        </tr>
+                        <tr>
+                            <td>Más de 300.000 €</td>
+                            <td>47 %</td>
+                            <td>Tramo máximo marginal</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>3. Claves de la Indemnización por Despido y Finiquito</h3>
+            <p>En el ámbito laboral, es crucial diferenciar entre el <strong>finiquito</strong> (cobro de salarios devengados y no cobrados, partes proporcionales de pagas extra y vacaciones no disfrutadas) y la <strong>indemnización</strong>, que responde al fin de la relación laboral voluntario por la empresa:</p>
+            <ul>
+                <li><strong>Despido Objetivo o Procedente:</strong> Se compensa legalmente con 20 días por año trabajado, con un tope máximo de 12 mensualidades.</li>
+                <li><strong>Despido Improcedente:</strong> La legislación establece una compensación de 33 días por año trabajado (para contratos posteriores a febrero de 2012), con un límite máximo de 24 mensualidades.</li>
+            </ul>
+
+            <h3>4. La Fuerza del Interés Compuesto en las Inversiones</h3>
+            <p>Albert Einstein definió el interés compuesto como la octava maravilla del mundo. Su impacto radica en que los intereses generados en cada periodo de inversión no se retiran, sino que se reinvierten para generar nuevos intereses en los periodos subsiguientes.</p>
+            <p>Con aportaciones periódicas modestas pero continuadas a lo largo de décadas, la curva de crecimiento del patrimonio se vuelve exponencial debido al efecto multiplicador del tiempo y el tipo de interés acumulado.</p>
+        </section>
+
+        <!-- SECCIÓN PREGUNTAS FRECUENTES (FAQ) -->
         <section class="faq-section" id="faq">
             <h2>Preguntas Frecuentes</h2>
             
             <div class="faq-item">
                 <button class="faq-question" onclick="toggleFaq(this)">
-                    ¿Cuál es la diferencia entre sueldo bruto y neto?
+                    ¿Por qué varía la retención de IRPF si mantengo el mismo sueldo bruto?
                     <span class="faq-icon">▼</span>
                 </button>
                 <div class="faq-answer">
-                    El sueldo bruto es la cantidad total antes de aplicar cualquier tipo de descuento. El sueldo neto es el dinero real que recibes en tu cuenta bancaria tras descontar la aportación a la Seguridad Social (desempleo, contingencias comunes) y el IRPF.
+                    La retención del IRPF puede cambiar si cambian circunstancias personales o familiares (como el nacimiento de hijos, matrimonio o un grado de discapacidad reconocido), así como por variaciones en la duración del contrato o regularizaciones a mitad de año fiscal realizadas por el departamento de recursos humanos.
                 </div>
             </div>
 
             <div class="faq-item">
                 <button class="faq-question" onclick="toggleFaq(this)">
-                    ¿Cómo se calcula el finiquito en un despido?
+                    ¿Cómo influyen las pagas extras en mi cálculo mensual de sueldo neto?
                     <span class="faq-icon">▼</span>
                 </button>
                 <div class="faq-answer">
-                    El finiquito incluye los días trabajados del mes en curso no cobrados, las vacaciones devengadas no disfrutadas, la parte proporcional de las pagas extraordinarias y la indemnización por despido correspondiente (20 o 33 días por año trabajado según procedencia).
+                    Si cobras en 12 pagas, las pagas extraordinarias están prorrateadas cada mes. Si cobras en 14 pagas, percibirás una nómina menor cada mes habitual, pero recibirás dos pagas dobles adicionales (habitualmente en junio y diciembre). La retención anual acumulada en euros es exactamente idéntica en ambos casos.
                 </div>
             </div>
 
             <div class="faq-item">
                 <button class="faq-question" onclick="toggleFaq(this)">
-                    ¿Qué es el interés compuesto y cómo funciona?
+                    ¿Qué amortización de hipoteca utiliza esta calculadora?
                     <span class="faq-icon">▼</span>
                 </button>
                 <div class="faq-answer">
-                    El interés compuesto es el proceso mediante el cual los intereses generados por una inversión se suman al capital inicial, provocando que en los siguientes periodos los intereses se calculen sobre un saldo mayor, multiplicando el crecimiento del ahorro a largo plazo.
+                    Esta herramienta utiliza el sistema de amortización francés, que es el más común en España y Europa. En este sistema, las cuotas pagadas mensualmente son constantes (mientras no varíe el tipo de interés), pagando más proporción de intereses al principio y más capital al final.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    ¿La indemnización por despido cotiza o paga impuestos?
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Las indemnizaciones por despido están exentas de tributar en el IRPF y de cotizar a la Seguridad Social hasta el límite máximo legal establecido en el Estatuto de los Trabajadores (o hasta un máximo global de 180.000 €).
                 </div>
             </div>
         </section>
 
     </main>
 
+    <!-- PIE DE PÁGINA -->
     <footer>
-        <p>&copy; 2026 FinanCalc. Todos los derechos reservados. | Diseñado para optimizar tus decisiones financieras.</p>
+        <p>&copy; 2026 FinanCalc. Todos los derechos reservados. Herramienta y portal de información financiera gratuita.</p>
+        <p style="margin-top: 0.8rem; font-size: 0.85rem;">
+            <a href="privacidad.html">Política de Privacidad</a> |
+            <a href="cookies.html">Política de Cookies</a> |
+            <a href="aviso-legal.html">Aviso Legal</a>
+        </p>
     </footer>
 
+    <!-- LÓGICA DE PROGRAMACIÓN EN JAVASCRIPT -->
     <script>
-        // Cambiar pestañas
         function switchTab(tabName, event) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.calculator-card').forEach(card => card.classList.remove('active'));
@@ -621,13 +818,11 @@
             document.getElementById('tab-' + tabName).classList.add('active');
         }
 
-        // Abrir y cerrar FAQ
         function toggleFaq(button) {
             const item = button.parentElement;
             item.classList.toggle('active');
         }
 
-        // 1. Sueldo
         function calcularSueldo() {
             const bruto = parseFloat(document.getElementById('bruto').value) || 0;
             const pagas = parseInt(document.getElementById('pagas').value);
@@ -643,7 +838,6 @@
             document.getElementById('res-neto-mensual').innerText = Math.round(netoMensual).toLocaleString() + ' €';
         }
 
-        // 2. Hipoteca
         function calcularHipoteca() {
             const P = parseFloat(document.getElementById('prestamo').value) || 0;
             const anos = parseFloat(document.getElementById('plazo').value) || 0;
@@ -663,7 +857,6 @@
             document.getElementById('res-intereses-hipoteca').innerText = Math.round(totalIntereses).toLocaleString() + ' €';
         }
 
-        // 3. Finiquito
         function calcularFiniquito() {
             const salarioMensual = parseFloat(document.getElementById('salario-mensual').value) || 0;
             const anos = parseFloat(document.getElementById('anos-trabajados').value) || 0;
@@ -678,13 +871,11 @@
             document.getElementById('res-indemnizacion').innerText = Math.round(indemnizacion).toLocaleString() + ' €';
         }
 
-        // 4. Tramos IRPF
         function calcularTramosIRPF() {
             const bruto = parseFloat(document.getElementById('base-irpf').value) || 0;
             let cuota = 0;
 
-            // Tramos simplificados
-            if (bruto > 300000) cuota += (bruto - 300000) * 0.47, base = 300000;
+            if (bruto > 300000) cuota += (bruto - 300000) * 0.47;
             if (bruto > 60000) cuota += (Math.min(bruto, 300000) - 60000) * 0.45;
             if (bruto > 35200) cuota += (Math.min(bruto, 60000) - 35200) * 0.37;
             if (bruto > 20200) cuota += (Math.min(bruto, 35200) - 20200) * 0.30;
@@ -697,14 +888,13 @@
             document.getElementById('res-tipo-medio').innerText = tipoMedio.toFixed(2) + ' %';
         }
 
-        // 5. Interés Compuesto
         function calcularInteresCompuesto() {
             const P = parseFloat(document.getElementById('capital-inicial').value) || 0;
             const PMT = parseFloat(document.getElementById('aportacion-mensual').value) || 0;
             const t = parseFloat(document.getElementById('anos-inversion').value) || 0;
             const r = (parseFloat(document.getElementById('rentabilidad-anual').value) || 0) / 100;
 
-            const n = 12; // Mensual
+            const n = 12;
             const meses = t * n;
             const rMensual = r / n;
 
@@ -722,7 +912,7 @@
             document.getElementById('res-capital-final').innerText = Math.round(FV).toLocaleString() + ' €';
         }
 
-        // Ejecutar cálculos iniciales
+        // Ejecutar cálculos al cargar
         calcularSueldo();
         calcularHipoteca();
         calcularFiniquito();
